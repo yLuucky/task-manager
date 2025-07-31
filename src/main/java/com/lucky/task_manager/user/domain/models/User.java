@@ -1,5 +1,6 @@
 package com.lucky.task_manager.user.domain.models;
 
+import com.lucky.task_manager.user.domain.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.Getter;
@@ -22,12 +23,12 @@ public class User implements UserDetails {
     @GeneratedValue(generator = "UUID4")
     @GenericGenerator(name = "UUID4", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "id", columnDefinition = "UUID")
-    private UUID id;
+    private UUID userId;
     private String name;
     @Email
     private String email;
     private String password;
-    private String role;
+    private Role role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

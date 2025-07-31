@@ -4,6 +4,7 @@ import com.lucky.task_manager.user.application.dtos.RegisterUserDTO;
 import com.lucky.task_manager.user.application.exceptions.IUserExceptions;
 import com.lucky.task_manager.user.application.exceptions.UserAlreadyExistsWithEmailException;
 import com.lucky.task_manager.user.application.services.IRegisterUserService;
+import com.lucky.task_manager.user.domain.enums.Role;
 import com.lucky.task_manager.user.domain.models.User;
 import com.lucky.task_manager.user.domain.repositories.IUserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +36,7 @@ public class RegisterUserService implements IRegisterUserService {
         user.setName(registerUserDTO.name());
         user.setEmail(registerUserDTO.email());
         user.setPassword(registerUserDTO.password());
-        user.setRole("USER");
+        user.setRole(Role.USER);
 
         userRepository.save(user);
     }
