@@ -1,0 +1,46 @@
+package com.lucky.task_manager.user.domain.models;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
+
+@Getter
+@Setter
+@Entity
+@Table(name = "users")
+public class User implements UserDetails {
+
+    @Id
+    @GeneratedValue(generator = "UUID4")
+    @GenericGenerator(name = "UUID4", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "id", columnDefinition = "UUID")
+    private UUID id;
+    private String name;
+    @Email
+    private String email;
+    private String password;
+    private String role;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
+
+    @Override
+    public String getPassword() {
+        return "";
+    }
+
+    @Override
+    public String getUsername() {
+        return "";
+    }
+}
