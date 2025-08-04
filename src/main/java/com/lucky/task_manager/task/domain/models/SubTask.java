@@ -16,12 +16,16 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @Table(name = "sub_tasks")
-public class SubTask extends Task {
+public class SubTask {
 
     @Id
     @GeneratedValue(generator = "UUID4")
     @UuidGenerator
+    @Column(name = "sub_task_id", columnDefinition = "UUID")
     private UUID subTaskId;
+
+    @Column(name = "user_id", nullable = false)
+    private UUID userId;
 
     @Column(nullable = false)
     private String title;
@@ -30,7 +34,7 @@ public class SubTask extends Task {
     private String description;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "status", length = 30)
     private Status status = Status.OPEN;
 
     @CreationTimestamp
@@ -39,9 +43,8 @@ public class SubTask extends Task {
 
     private LocalDateTime concludedAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "task_id", nullable = false)
-    private Task task;
+    @Column(name = "task_id", nullable = false)
+    private UUID taskId;
 
     public void updateStatus(Status newStatus) {
         this.status = newStatus;
@@ -52,7 +55,4 @@ public class SubTask extends Task {
         }
     }
 
-    public UUID getTaskId() {
-        return task != null ? task.getTaskId() : null;
-    }
 }
