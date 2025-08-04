@@ -7,5 +7,5 @@ import com.lucky.task_manager.task.application.exceptions.TaskAlreadyCompletedEx
 import java.util.UUID;
 
 public interface ICreateSubTaskService {
-    SubTaskResponse execute(SubTaskDTO taskDTO) throws TaskAlreadyCompletedException;
+    SubTaskResponse execute(SubTaskDTO taskDTO, UUID taskId) throws TaskAlreadyCompletedException;
 }

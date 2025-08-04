@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import static com.lucky.task_manager.task.application.exceptions.ITaskExceptions.TASK_ALREADY_COMPLETED_EXCEPTION;
 
@@ -34,22 +35,22 @@ public class CreateSubTaskService implements ICreateSubTaskService {
     }
 
     @Override
-    public SubTaskResponse execute(SubTaskDTO taskDTO) throws TaskAlreadyCompletedException {
-        final Task task = ITaskRepository.findById(taskDTO.taskId()).orElseThrow();
+    public SubTaskResponse execute(SubTaskDTO subTaskDTO, final UUID taskId) throws TaskAlreadyCompletedException {
+        final Task task = ITaskRepository.findById(taskId).orElseThrow();
 
         if (task.getStatus().equals(Status.CLOSED)) {
             throw TASK_ALREADY_COMPLETED_EXCEPTION;
         }
 
         SubTask subTask = new SubTask();
-        subTask.setUserId(taskDTO.userId());
-        subTask.setTaskId(taskDTO.taskId());
-        subTask.setTitle(taskDTO.title());
-        subTask.setDescription(taskDTO.description());
-        subTask.setStatus(taskDTO.status());
+        subTask.setUserId(subTaskDTO.userId());
+        subTask.setTaskId(taskId);
+        subTask.setTitle(subTaskDTO.title());
+        subTask.setDescription(subTaskDTO.description());
+        subTask.setStatus(Status.OPEN);
         subTask.setCreatedAt(LocalDateTime.now());
 
-        SubTask savedTask = ISubTaskRepository.save(subTask);
-        return subTaskMapper.toResponse(savedTask);
+        SubTask savedSubTask = ISubTaskRepository.save(subTask);
+        return subTaskMapper.toResponse(savedSubTask);
     }
 }
