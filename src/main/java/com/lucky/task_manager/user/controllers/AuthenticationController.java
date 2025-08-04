@@ -1,6 +1,9 @@
 package com.lucky.task_manager.user.controllers;
 
-import com.lucky.task_manager.user.application.dtos.*;
+import com.lucky.task_manager.user.application.dtos.AuthenticationDTO;
+import com.lucky.task_manager.user.application.dtos.LoginResponseDTO;
+import com.lucky.task_manager.user.application.dtos.RegisterUserDTO;
+import com.lucky.task_manager.user.application.dtos.UsersResponseDTO;
 import com.lucky.task_manager.user.application.exceptions.IncorrectLoginInformationException;
 import com.lucky.task_manager.user.application.exceptions.UserAlreadyExistsWithEmailException;
 import com.lucky.task_manager.user.application.exceptions.UserNotFoundException;

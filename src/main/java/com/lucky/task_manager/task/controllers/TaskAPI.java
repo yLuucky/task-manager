@@ -22,8 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-import static com.lucky.task_manager.task.application.exceptions.ITaskExceptions.SUBTASK_NOT_FOUND_EXCEPTION_MSG;
-import static com.lucky.task_manager.task.application.exceptions.ITaskExceptions.TASK_HAS_OPEN_SUBTASKS_EXCEPTION_MSG;
+import static com.lucky.task_manager.task.application.exceptions.ITaskExceptions.*;
 import static com.lucky.task_manager.user.application.exceptions.IUserExceptions.USER_NOT_FOUND_EXCEPTION_MSG;
 
 @RequestMapping("/task-api")
@@ -66,7 +65,9 @@ public interface TaskAPI {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Subtask successfully created",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = SubTaskDTO.class))),
-            @ApiResponse(responseCode = "400", description = TASK_HAS_OPEN_SUBTASKS_EXCEPTION_MSG,
+            @ApiResponse(responseCode = "404", description = "Task Not Found",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "400", description = TASK_ALREADY_COMPLETED_EXCEPTION_MSG,
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PostMapping("/tasks/{id}/subtasks")
@@ -76,7 +77,7 @@ public interface TaskAPI {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "All subtask listed",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = TaskResponse.class))),
-            @ApiResponse(responseCode = "400", description = SUBTASK_NOT_FOUND_EXCEPTION_MSG,
+            @ApiResponse(responseCode = "404", description = SUBTASK_NOT_FOUND_EXCEPTION_MSG,
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
     })
     @ResponseStatus(HttpStatus.CREATED)

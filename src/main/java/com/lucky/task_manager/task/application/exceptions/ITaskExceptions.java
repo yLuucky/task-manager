@@ -1,7 +1,5 @@
 package com.lucky.task_manager.task.application.exceptions;
 
-import com.lucky.task_manager.user.application.exceptions.UserNotFoundException;
-
 public interface ITaskExceptions {
 
     String TASK_ALREADY_COMPLETED_EXCEPTION_MSG = "Task is closed";

@@ -1,6 +1,5 @@
 package com.lucky.task_manager.user.domain.repositories;
 
-import com.lucky.task_manager.user.application.dtos.UsersResponseDTO;
 import com.lucky.task_manager.user.domain.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 

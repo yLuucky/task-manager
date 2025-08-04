@@ -8,7 +8,6 @@ import com.lucky.task_manager.task.domain.mappers.TaskMapper;
 import com.lucky.task_manager.task.domain.models.Task;
 import com.lucky.task_manager.task.domain.repositories.ITaskRepository;
 import com.lucky.task_manager.user.application.exceptions.UserNotFoundException;
-import com.lucky.task_manager.user.domain.models.User;
 import com.lucky.task_manager.user.domain.repositories.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

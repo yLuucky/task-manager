@@ -1,6 +1,5 @@
 package com.lucky.task_manager.task.domain.models;
 
-import com.lucky.task_manager.task.application.exceptions.TaskHasOpenSubTasksException;
 import com.lucky.task_manager.task.domain.enums.Status;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -11,8 +10,6 @@ import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
-
-import static com.lucky.task_manager.task.application.exceptions.ITaskExceptions.TASK_HAS_OPEN_SUBTASKS_EXCEPTION;
 
 @Getter
 @Setter

@@ -8,7 +8,6 @@ import com.lucky.task_manager.task.application.exceptions.TaskAlreadyCompletedEx
 import com.lucky.task_manager.task.application.exceptions.TaskHasOpenSubTasksException;
 import com.lucky.task_manager.task.application.services.*;
 import com.lucky.task_manager.task.domain.enums.Status;
-import com.lucky.task_manager.task.domain.models.Task;
 import com.lucky.task_manager.user.application.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
