@@ -1,28 +1,27 @@
-CREATE TYPE status_enum AS ENUM ('OPEN', 'IN_PROGRESS', 'CLOSED');
-CREATE TYPE role_enum AS ENUM ('USER', 'ADMIN');
-
-CREATE TABLE users (id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+CREATE TABLE users (id UUID PRIMARY KEY,
                     name VARCHAR(255),
                     email VARCHAR(255) UNIQUE,
                     password VARCHAR(255),
-                    role role_enum);
+                    role VARCHAR(30));
 
-CREATE TABLE tasks (task_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+CREATE TABLE tasks (task_id UUID PRIMARY KEY,
                     title VARCHAR(255) NOT NULL,
                     description TEXT,
-                    status status_enum DEFAULT 'OPEN',
-                    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                    status VARCHAR(30),
+                    created_at TIMESTAMP NOT NULL,
                     concluded_at TIMESTAMP,
                     user_id UUID NOT NULL,
                     CONSTRAINT fk_task_user FOREIGN KEY (user_id) REFERENCES users(id));
 
-CREATE TABLE sub_tasks (sub_task_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+CREATE TABLE sub_tasks (sub_task_id UUID PRIMARY KEY,
+                        user_id UUID NOT NULL,
                         title VARCHAR(255) NOT NULL,
                         description TEXT,
-                        status status_enum NOT NULL DEFAULT 'OPEN',
-                        created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                        status VARCHAR(30),
+                        created_at TIMESTAMP NOT NULL,
                         concluded_at TIMESTAMP,
-                        task_id UUID NOT NULL,
+                        task_id UUID,
+                        CONSTRAINT fk_subtask_user FOREIGN KEY (user_id) REFERENCES users(id),
                         CONSTRAINT fk_subtask_task FOREIGN KEY (task_id) REFERENCES tasks(task_id));
 
 ALTER TABLE users ADD CONSTRAINT chk_email_format
