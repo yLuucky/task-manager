@@ -45,8 +45,8 @@ public class AuthenticationController implements AuthenticationApi{
 
     @Override
     public ResponseEntity<UsersResponseDTO> userFound(UUID id) throws UserNotFoundException {
-        retrieveUserService.execute(id);
+        final UsersResponseDTO usersResponseDTO = retrieveUserService.execute(id);
 
-        return ResponseEntity.status(201).build();
+        return ResponseEntity.status(200).body(usersResponseDTO);
     }
 }
