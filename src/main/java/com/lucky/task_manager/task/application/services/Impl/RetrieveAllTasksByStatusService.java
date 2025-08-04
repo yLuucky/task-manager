@@ -1,7 +1,7 @@
 package com.lucky.task_manager.task.application.services.Impl;
 
 import com.lucky.task_manager.task.application.dtos.TaskResponse;
-import com.lucky.task_manager.task.application.services.IRetrieveAllTasksByStatus;
+import com.lucky.task_manager.task.application.services.IRetrieveAllTasksByStatusService;
 import com.lucky.task_manager.task.domain.enums.Status;
 import com.lucky.task_manager.task.domain.mappers.TaskMapper;
 import com.lucky.task_manager.task.domain.models.Task;
@@ -13,14 +13,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class RetrieveAllTasksByStatusStatus implements IRetrieveAllTasksByStatus {
+public class RetrieveAllTasksByStatusService implements IRetrieveAllTasksByStatusService {
 
     private final ITaskRepository ITaskRepository;
     private final TaskMapper taskMapper;
 
     @Autowired
-    public RetrieveAllTasksByStatusStatus(final ITaskRepository ITaskRepository,
-                                          final TaskMapper taskMapper) {
+    public RetrieveAllTasksByStatusService(final ITaskRepository ITaskRepository,
+                                           final TaskMapper taskMapper) {
         this.ITaskRepository = ITaskRepository;
         this.taskMapper = taskMapper;
     }
