@@ -9,6 +9,7 @@ import com.lucky.task_manager.user.domain.models.User;
 import com.lucky.task_manager.user.domain.repositories.IUserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -18,10 +19,12 @@ import java.util.Optional;
 public class RegisterUserService implements IRegisterUserService {
 
     private final IUserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public RegisterUserService(final IUserRepository userRepository) {
+    public RegisterUserService(final IUserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -35,7 +38,7 @@ public class RegisterUserService implements IRegisterUserService {
         final User user = new User();
         user.setName(registerUserDTO.name());
         user.setEmail(registerUserDTO.email());
-        user.setPassword(registerUserDTO.password());
+        user.setPassword(passwordEncoder.encode(registerUserDTO.password()));
         user.setRole(Role.USER);
 
         userRepository.save(user);
