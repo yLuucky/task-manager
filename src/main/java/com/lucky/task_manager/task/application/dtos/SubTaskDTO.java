@@ -6,5 +6,5 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public record SubTaskDTO(@NotNull UUID id, @NotNull String title, String description, Status status, LocalDateTime createdAt, UUID userId, @NotNull UUID taskId) {
+public record SubTaskDTO(@NotNull String title, String description, UUID userId) {
 }
