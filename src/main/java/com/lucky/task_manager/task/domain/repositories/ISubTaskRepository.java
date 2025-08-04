@@ -12,7 +12,7 @@ import java.util.UUID;
 @Repository
 public interface ISubTaskRepository extends JpaRepository<SubTask, UUID> {
 
-    List<SubTask> findByTaskTaskId(UUID taskId);
-    Optional<SubTask> findByIdAndUserId(@Param("subTaskId") UUID subTaskId, @Param("userId") UUID userId);
-    Optional<SubTask> findByIdWithTask(@Param("subTaskId") UUID subTaskId);
+    List<SubTask> findByTaskId(UUID taskId);
+//    Optional<SubTask> findByIdAndUserId(@Param("subTaskId") UUID subTaskId, @Param("userId") UUID userId);
+//    Optional<SubTask> findByIdWithTask(@Param("subTaskId") UUID subTaskId);
 }
