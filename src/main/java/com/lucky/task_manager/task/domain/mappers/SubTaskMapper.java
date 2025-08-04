@@ -4,6 +4,8 @@ import com.lucky.task_manager.task.application.dtos.SubTaskResponse;
 import com.lucky.task_manager.task.domain.models.SubTask;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class SubTaskMapper {
 
@@ -17,4 +19,11 @@ public class SubTaskMapper {
                 subTask.getConcludedAt(),
                 subTask.getTaskId());
     }
+
+    public List<SubTaskResponse> toResponses(List<SubTask> subTasks) {
+        return subTasks.stream()
+                .map(this::toResponse)
+                .toList();
+    }
+
 }
