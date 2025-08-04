@@ -6,6 +6,6 @@ import com.lucky.task_manager.task.domain.enums.Status;
 import java.util.List;
 import java.util.UUID;
 
-public interface IRetrieveTaskServiceBy {
-    List<TaskResponse> execute(UUID userId, Status status);
+public interface IRetrieveAllTasksByStatus {
+    List<TaskResponse> execute(Status status, int page);
 }
