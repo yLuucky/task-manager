@@ -26,6 +26,7 @@ public class Task {
     @Id
     @GeneratedValue(generator = "UUID4")
     @UuidGenerator
+    @Column(name = "task_id", columnDefinition = "UUID")
     private UUID taskId;
 
     @Column(nullable = false)
@@ -34,6 +35,8 @@ public class Task {
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", length = 30)
     private Status status = Status.OPEN;
 
     @CreationTimestamp
@@ -42,10 +45,11 @@ public class Task {
 
     private LocalDateTime concludedAt;
 
-    @Column(nullable = false)
+    @Column(name = "user_id", nullable = false)
     private UUID userId;
 
-    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "task_id")
     private List<SubTask> subTasks = new ArrayList<>();
 
     public void updateStatus(Status newStatus) throws TaskHasOpenSubTasksException {
