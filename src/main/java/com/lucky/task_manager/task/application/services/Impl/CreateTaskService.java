@@ -3,6 +3,7 @@ package com.lucky.task_manager.task.application.services.Impl;
 import com.lucky.task_manager.task.application.dtos.TaskDTO;
 import com.lucky.task_manager.task.application.dtos.TaskResponse;
 import com.lucky.task_manager.task.application.services.ICreateTaskService;
+import com.lucky.task_manager.task.domain.enums.Status;
 import com.lucky.task_manager.task.domain.mappers.TaskMapper;
 import com.lucky.task_manager.task.domain.models.Task;
 import com.lucky.task_manager.task.domain.repositories.ITaskRepository;
@@ -44,7 +45,7 @@ public class CreateTaskService implements ICreateTaskService {
         task.setTitle(taskDTO.title());
         task.setDescription(taskDTO.description());
         task.setUserId(taskDTO.userId());
-        task.setStatus(taskDTO.status());
+        task.setStatus(Status.OPEN);
         task.setCreatedAt(LocalDateTime.now());
 
         Task savedTask = ITaskRepository.save(task);
