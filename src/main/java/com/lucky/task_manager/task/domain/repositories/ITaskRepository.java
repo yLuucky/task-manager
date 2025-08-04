@@ -15,6 +15,6 @@ public interface ITaskRepository extends JpaRepository<Task, UUID> {
 
     List<Task> findByUserIdAndStatus(UUID userId, Status status);
     List<Task> findByUserId(UUID userId);
-    Optional<Task> findByIdWithSubTasks(@Param("taskId") UUID taskId);
+//    Optional<Task> findByIdWithSubTasks(@Param("taskId") UUID taskId);
     boolean existsByTaskIdAndUserId(UUID taskId, UUID userId);
 }
