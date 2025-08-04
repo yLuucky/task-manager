@@ -32,7 +32,7 @@ public class SecurityConfigurations {
                         .requestMatchers("/swagger-ui.html").permitAll()
                         .requestMatchers("/v3/api-docs/**").permitAll()
                         .requestMatchers("/webjars/**").permitAll()
-                        .requestMatchers("/tasks/**").authenticated()
+                        .requestMatchers("/task-api/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(exceptions -> exceptions
