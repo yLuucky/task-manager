@@ -9,4 +9,7 @@ public interface ITaskExceptions {
 
     String TASK_HAS_OPEN_SUBTASKS_EXCEPTION_MSG = "Is not possible to close this task because has open subtasks";
     TaskHasOpenSubTasksException TASK_HAS_OPEN_SUBTASKS_EXCEPTION = new TaskHasOpenSubTasksException(TASK_HAS_OPEN_SUBTASKS_EXCEPTION_MSG);
+
+    String SUBTASK_NOT_FOUND_EXCEPTION_MSG = "Subtask not found";
+    SubTaskNotFoundException SUBTASK_NOT_FOUND_EXCEPTION = new SubTaskNotFoundException(SUBTASK_NOT_FOUND_EXCEPTION_MSG);
 }
