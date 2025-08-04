@@ -1,5 +1,6 @@
 package com.lucky.task_manager.task.domain.models;
 
+import com.lucky.task_manager.task.application.exceptions.TaskHasOpenSubTasksException;
 import com.lucky.task_manager.task.domain.enums.Status;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -10,6 +11,8 @@ import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
+
+import static com.lucky.task_manager.task.application.exceptions.ITaskExceptions.TASK_HAS_OPEN_SUBTASKS_EXCEPTION;
 
 @Getter
 @Setter
@@ -47,12 +50,17 @@ public class SubTask {
     private UUID taskId;
 
     public void updateStatus(Status newStatus) {
-        this.status = newStatus;
         if (newStatus.equals(Status.CLOSED)) {
-            this.concludedAt = LocalDateTime.now();
-        } else {
-            this.concludedAt = null;
+            this.completeTask();
+            return;
         }
+        this.status = newStatus;
+        this.concludedAt = null;
+    }
+
+    private void completeTask() {
+        this.status = Status.CLOSED;
+        this.concludedAt = LocalDateTime.now();
     }
 
 }
