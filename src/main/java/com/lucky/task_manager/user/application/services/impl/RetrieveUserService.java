@@ -1,5 +1,6 @@
 package com.lucky.task_manager.user.application.services.impl;
 
+import com.lucky.task_manager.user.application.dtos.UsersResponseDTO;
 import com.lucky.task_manager.user.application.exceptions.UserNotFoundException;
 import com.lucky.task_manager.user.application.services.IRetrieveUserService;
 import com.lucky.task_manager.user.domain.models.User;
@@ -25,9 +26,13 @@ public class RetrieveUserService implements IRetrieveUserService {
     }
 
     @Override
-    public User execute(final UUID id) throws UserNotFoundException {
-        final Optional<User> user = userRepository.findById(id);
+    public UsersResponseDTO execute(final UUID id) throws UserNotFoundException {
+        final Optional<User> user = userRepository.findUserByUserId(id);
 
-        return user.orElseThrow(() -> USER_NOT_FOUND_EXCEPTION);
+        if (user.isEmpty()) {
+            throw USER_NOT_FOUND_EXCEPTION;
+        }
+
+        return new UsersResponseDTO(user.get().getUserId(), user.get().getName(), user.get().getEmail());
     }
 }
