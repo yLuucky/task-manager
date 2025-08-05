@@ -2,10 +2,8 @@ package com.lucky.task_manager.task.application.services.Impl;
 
 import com.lucky.task_manager.task.application.dtos.TaskResponse;
 import com.lucky.task_manager.task.domain.enums.Status;
-import com.lucky.task_manager.task.domain.mappers.TaskMapper;
 import com.lucky.task_manager.task.domain.models.Task;
 import com.lucky.task_manager.task.domain.repositories.ITaskRepository;
-import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -29,9 +27,6 @@ public class RetrieveAllTasksByStatusServiceTest {
 
     @Mock
     private ITaskRepository ITaskRepository;
-
-    @Mock
-    private TaskMapper taskMapper;
 
     @InjectMocks
     private RetrieveAllTasksByStatusService retrieveAllTasksByStatusService;
@@ -58,7 +53,6 @@ public class RetrieveAllTasksByStatusServiceTest {
                 task.getStatus(), task.getCreatedAt(), task.getConcludedAt(), task.getUserId(), Collections.emptyList());
 
         when(ITaskRepository.findByStatus(status, pageable)).thenReturn(taskPage.getContent());
-        when(taskMapper.toResponse(any(Task.class))).thenReturn(taskResponse);
 
         List<TaskResponse> result = retrieveAllTasksByStatusService.execute(status, page);
 
@@ -67,7 +61,6 @@ public class RetrieveAllTasksByStatusServiceTest {
         assertThat(result.get(0).status()).isEqualTo(Status.OPEN);
 
         verify(ITaskRepository, times(1)).findByStatus(status, pageable);
-        verify(taskMapper, times(1)).toResponse(task);
     }
 
     @Test
@@ -83,6 +76,5 @@ public class RetrieveAllTasksByStatusServiceTest {
         assertThat(result).isEmpty();
 
         verify(ITaskRepository, times(1)).findByStatus(status, pageable);
-        verifyNoInteractions(taskMapper);
     }
 }

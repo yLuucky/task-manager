@@ -3,7 +3,6 @@ package com.lucky.task_manager.task.application.services.Impl;
 import com.lucky.task_manager.task.application.dtos.TaskDTO;
 import com.lucky.task_manager.task.application.dtos.TaskResponse;
 import com.lucky.task_manager.task.domain.enums.Status;
-import com.lucky.task_manager.task.domain.mappers.TaskMapper;
 import com.lucky.task_manager.task.domain.models.Task;
 import com.lucky.task_manager.task.domain.repositories.ITaskRepository;
 import com.lucky.task_manager.user.application.exceptions.UserNotFoundException;
@@ -28,9 +27,6 @@ class CreateTaskServiceTest {
     @Mock
     private ITaskRepository taskRepository;
 
-    @Mock
-    private TaskMapper taskMapper;
-
     @InjectMocks
     private CreateTaskService createTaskService;
 
@@ -39,7 +35,7 @@ class CreateTaskServiceTest {
     }
 
     @Test
-    void execute_ShouldCreateTaskSuccessfully_WhenUserExists() throws UserNotFoundException {
+    void ShouldCreateTaskSuccessfullyWhenUserExists() throws UserNotFoundException {
         UUID userId = UUID.randomUUID();
         TaskDTO taskDTO = new TaskDTO("Test Title", "Test Description", userId);
         Task task = new Task();
@@ -52,10 +48,6 @@ class CreateTaskServiceTest {
 
         when(userRepository.existsById(userId)).thenReturn(true);
         when(taskRepository.save(any(Task.class))).thenReturn(task);
-        when(taskMapper.toResponse(task)).thenReturn(new TaskResponse(
-                task.getTaskId(), task.getTitle(), task.getDescription(),
-                task.getStatus(), task.getCreatedAt(), null, task.getUserId(), null
-        ));
 
         TaskResponse response = createTaskService.execute(taskDTO);
 
@@ -69,11 +61,10 @@ class CreateTaskServiceTest {
 
         verify(userRepository, times(1)).existsById(userId);
         verify(taskRepository, times(1)).save(any(Task.class));
-        verify(taskMapper, times(1)).toResponse(task);
     }
 
     @Test
-    void execute_ShouldThrowUserNotFoundException_WhenUserDoesNotExist() {
+    void ShouldThrowUserNotFoundExceptionWhenUserDoesNotExist() {
         UUID userId = UUID.randomUUID();
         TaskDTO taskDTO = new TaskDTO("Test Title", "Test Description", userId);
 
@@ -84,6 +75,5 @@ class CreateTaskServiceTest {
         assertEquals("User with this Id was not found", exception.getMessage());
         verify(userRepository, times(1)).existsById(userId);
         verifyNoInteractions(taskRepository);
-        verifyNoInteractions(taskMapper);
     }
 }

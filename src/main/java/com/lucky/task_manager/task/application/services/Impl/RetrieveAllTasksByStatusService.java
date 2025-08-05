@@ -16,13 +16,10 @@ import java.util.List;
 public class RetrieveAllTasksByStatusService implements IRetrieveAllTasksByStatusService {
 
     private final ITaskRepository ITaskRepository;
-    private final TaskMapper taskMapper;
 
     @Autowired
-    public RetrieveAllTasksByStatusService(final ITaskRepository ITaskRepository,
-                                           final TaskMapper taskMapper) {
+    public RetrieveAllTasksByStatusService(final ITaskRepository ITaskRepository) {
         this.ITaskRepository = ITaskRepository;
-        this.taskMapper = taskMapper;
     }
 
     @Override
@@ -30,6 +27,6 @@ public class RetrieveAllTasksByStatusService implements IRetrieveAllTasksByStatu
         List<Task> tasks;
         tasks = ITaskRepository.findByStatus(status, Pageable.ofSize(page));
 
-        return tasks.stream().map(taskMapper::toResponse).toList();
+        return tasks.stream().map(TaskMapper::toResponse).toList();
     }
 }

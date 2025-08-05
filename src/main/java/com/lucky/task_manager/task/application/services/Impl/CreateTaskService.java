@@ -20,16 +20,13 @@ import static com.lucky.task_manager.user.application.exceptions.IUserExceptions
 public class CreateTaskService implements ICreateTaskService {
 
     private final IUserRepository userRepository;
-    private final ITaskRepository ITaskRepository;
-    private final TaskMapper taskMapper;
+    private final ITaskRepository taskRepository;
 
     @Autowired
     public CreateTaskService(final IUserRepository userRepository,
-                             final ITaskRepository ITaskRepository,
-                             final TaskMapper taskMapper) {
+                             final ITaskRepository taskRepository) {
         this.userRepository = userRepository;
-        this.ITaskRepository = ITaskRepository;
-        this.taskMapper = taskMapper;
+        this.taskRepository = taskRepository;
     }
 
     @Override
@@ -47,7 +44,7 @@ public class CreateTaskService implements ICreateTaskService {
         task.setStatus(Status.OPEN);
         task.setCreatedAt(LocalDateTime.now());
 
-        Task savedTask = ITaskRepository.save(task);
-        return taskMapper.toResponse(savedTask);
+        Task savedTask = taskRepository.save(task);
+        return TaskMapper.toResponse(savedTask);
     }
 }

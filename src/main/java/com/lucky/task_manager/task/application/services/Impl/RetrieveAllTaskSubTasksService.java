@@ -15,19 +15,16 @@ import java.util.UUID;
 public class RetrieveAllTaskSubTasksService implements IRetrieveAllTaskSubTasksService {
 
     private final ISubTaskRepository subTaskRepository;
-    private final SubTaskMapper subTaskMapper;
 
     @Autowired
-    public RetrieveAllTaskSubTasksService(final ISubTaskRepository subTaskRepository,
-                                          final SubTaskMapper subTaskMapper) {
+    public RetrieveAllTaskSubTasksService(final ISubTaskRepository subTaskRepository) {
         this.subTaskRepository = subTaskRepository;
-        this.subTaskMapper = subTaskMapper;
     }
 
     @Override
     public List<SubTaskResponse> execute(final UUID taskId) {
         List<SubTask> taskResponses = subTaskRepository.findByTaskId(taskId);
 
-        return subTaskMapper.toResponses(taskResponses);
+        return SubTaskMapper.toResponses(taskResponses);
     }
 }

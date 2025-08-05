@@ -2,7 +2,6 @@ package com.lucky.task_manager.task.application.services.Impl;
 
 import com.lucky.task_manager.task.application.dtos.SubTaskResponse;
 import com.lucky.task_manager.task.domain.enums.Status;
-import com.lucky.task_manager.task.domain.mappers.SubTaskMapper;
 import com.lucky.task_manager.task.domain.models.SubTask;
 import com.lucky.task_manager.task.domain.repositories.ISubTaskRepository;
 import org.junit.jupiter.api.Test;
@@ -24,9 +23,6 @@ class RetrieveAllTaskSubTasksServiceTest {
     @Mock
     private ISubTaskRepository subTaskRepository;
 
-    @Mock
-    private SubTaskMapper subTaskMapper;
-
     @InjectMocks
     private RetrieveAllTaskSubTasksService service;
 
@@ -35,7 +31,7 @@ class RetrieveAllTaskSubTasksServiceTest {
     }
 
     @Test
-    void execute_WithValidTaskId_ReturnsMappedSubTaskResponses() {
+    void WithValidTaskIdReturnsMappedSubTaskResponses() {
         UUID taskId = UUID.randomUUID();
 
         List<SubTask> subTasks = new ArrayList<>();
@@ -76,8 +72,6 @@ class RetrieveAllTaskSubTasksServiceTest {
         responses.add(response1);
         responses.add(response2);
 
-        when(subTaskMapper.toResponses(subTasks)).thenReturn(responses);
-
         List<SubTaskResponse> result = service.execute(taskId);
 
         assertEquals(2, result.size());
@@ -86,11 +80,10 @@ class RetrieveAllTaskSubTasksServiceTest {
     }
 
     @Test
-    void execute_WithNoSubTasks_ReturnsEmptyList() {
+    void WithNoSubTasksReturnsEmptyList() {
         UUID taskId = UUID.randomUUID();
 
         when(subTaskRepository.findByTaskId(taskId)).thenReturn(new ArrayList<>());
-        when(subTaskMapper.toResponses(new ArrayList<>())).thenReturn(new ArrayList<>());
 
         List<SubTaskResponse> result = service.execute(taskId);
 

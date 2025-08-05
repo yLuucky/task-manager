@@ -23,15 +23,12 @@ public class CreateSubTaskService implements ICreateSubTaskService {
 
     private final ITaskRepository ITaskRepository;
     private final ISubTaskRepository ISubTaskRepository;
-    private final SubTaskMapper subTaskMapper;
 
     @Autowired
     public CreateSubTaskService(final ITaskRepository ITaskRepository,
-                                final ISubTaskRepository ISubTaskRepository,
-                                final SubTaskMapper subTaskMapper) {
+                                final ISubTaskRepository ISubTaskRepository) {
         this.ITaskRepository = ITaskRepository;
         this.ISubTaskRepository = ISubTaskRepository;
-        this.subTaskMapper = subTaskMapper;
     }
 
     @Override
@@ -51,6 +48,6 @@ public class CreateSubTaskService implements ICreateSubTaskService {
         subTask.setCreatedAt(LocalDateTime.now());
 
         SubTask savedSubTask = ISubTaskRepository.save(subTask);
-        return subTaskMapper.toResponse(savedSubTask);
+        return SubTaskMapper.toResponse(savedSubTask);
     }
 }

@@ -4,7 +4,6 @@ import com.lucky.task_manager.task.application.dtos.SubTaskDTO;
 import com.lucky.task_manager.task.application.dtos.SubTaskResponse;
 import com.lucky.task_manager.task.application.exceptions.TaskAlreadyCompletedException;
 import com.lucky.task_manager.task.domain.enums.Status;
-import com.lucky.task_manager.task.domain.mappers.SubTaskMapper;
 import com.lucky.task_manager.task.domain.models.SubTask;
 import com.lucky.task_manager.task.domain.models.Task;
 import com.lucky.task_manager.task.domain.repositories.ISubTaskRepository;
@@ -29,9 +28,6 @@ class CreateSubTaskServiceTest {
 
     @Mock
     private ISubTaskRepository subTaskRepository;
-
-    @Mock
-    private SubTaskMapper subTaskMapper;
 
     @InjectMocks
     private CreateSubTaskService createSubTaskService;
@@ -78,7 +74,6 @@ class CreateSubTaskServiceTest {
 
         when(taskRepository.findById(taskId)).thenReturn(Optional.of(task));
         when(subTaskRepository.save(any(SubTask.class))).thenReturn(savedSubTask);
-        when(subTaskMapper.toResponse(savedSubTask)).thenReturn(subTaskResponse);
 
         SubTaskResponse response = createSubTaskService.execute(subTaskDTO, taskId);
 
@@ -88,7 +83,6 @@ class CreateSubTaskServiceTest {
         assertEquals(Status.OPEN, response.status());
         verify(taskRepository, times(1)).findById(taskId);
         verify(subTaskRepository, times(1)).save(any(SubTask.class));
-        verify(subTaskMapper, times(1)).toResponse(savedSubTask);
     }
 
     @Test
@@ -109,7 +103,6 @@ class CreateSubTaskServiceTest {
         assertEquals("Task is closed", exception.getMessage());
         verify(taskRepository, times(1)).findById(taskId);
         verifyNoInteractions(subTaskRepository);
-        verifyNoInteractions(subTaskMapper);
     }
 
     @Test
@@ -125,6 +118,5 @@ class CreateSubTaskServiceTest {
 
         verify(taskRepository, times(1)).findById(taskId);
         verifyNoInteractions(subTaskRepository);
-        verifyNoInteractions(subTaskMapper);
     }
 }
