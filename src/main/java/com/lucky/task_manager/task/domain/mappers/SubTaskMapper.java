@@ -2,14 +2,16 @@ package com.lucky.task_manager.task.domain.mappers;
 
 import com.lucky.task_manager.task.application.dtos.SubTaskResponse;
 import com.lucky.task_manager.task.domain.models.SubTask;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class SubTaskMapper {
 
-    public SubTaskResponse toResponse(SubTask subTask) {
+    public static SubTaskResponse toResponse(SubTask subTask) {
         return new SubTaskResponse(
                 subTask.getSubTaskId(),
                 subTask.getTitle(),
@@ -20,9 +22,9 @@ public class SubTaskMapper {
                 subTask.getTaskId());
     }
 
-    public List<SubTaskResponse> toResponses(List<SubTask> subTasks) {
+    public static List<SubTaskResponse> toResponses(List<SubTask> subTasks) {
         return subTasks.stream()
-                .map(this::toResponse)
+                .map(SubTaskMapper::toResponse)
                 .toList();
     }
 

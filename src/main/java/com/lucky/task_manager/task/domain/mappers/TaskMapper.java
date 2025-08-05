@@ -2,18 +2,17 @@ package com.lucky.task_manager.task.domain.mappers;
 
 import com.lucky.task_manager.task.application.dtos.TaskResponse;
 import com.lucky.task_manager.task.domain.models.Task;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 
-@Component
-@RequiredArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TaskMapper {
 
-    private final SubTaskMapper subTaskMapper;
-
-    public TaskResponse toResponse(Task task) {
+    public static TaskResponse toResponse(Task task) {
         return new TaskResponse(
                 task.getTaskId(),
                 task.getTitle(),
@@ -22,6 +21,6 @@ public class TaskMapper {
                 task.getCreatedAt(),
                 task.getConcludedAt(),
                 task.getUserId(),
-                task.getSubTasks() != null ? task.getSubTasks().stream().map(subTaskMapper::toResponse).toList() : Collections.emptyList());
+                task.getSubTasks() != null ? task.getSubTasks().stream().map(SubTaskMapper::toResponse).toList() : Collections.emptyList());
     }
 }
